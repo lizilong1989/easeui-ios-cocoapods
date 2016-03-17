@@ -13,5 +13,5 @@ Pod::Spec.new do |spec|
   spec.vendored_libraries = ['EaseUI/lib/libEaseUI.a']
   spec.xcconfig     = {'OTHER_LDFLAGS' => '-ObjC'}
   spec.dependency 'MWPhotoBrowser', '~> 2.1.1'
-  spec.dependency 'MJRefresh', '~> 3.0.6'
+  spec.dependency 'MJRefresh', '~> 3.1.0'
 end
