@@ -6,11 +6,10 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/easemob/easeui-ios-cocoapods'
   spec.author       = {'EaseMob Inc.' => 'admin@easemob.com'}
   spec.source       =  {:git => 'https://github.com/easemob/easeui-ios-cocoapods.git', :tag => spec.version.to_s }
-  spec.source_files = "EaseUI/**/*.{h}"
+  spec.source_files = "EaseUI/**/*.{h.m}"
   spec.platform     = :ios, '6.0'
   spec.requires_arc = true
   spec.resource     = 'EaseUI/resources/EaseUIResource.bundle'
-  spec.vendored_libraries = ['EaseUI/lib/libEaseUI.a']
   spec.xcconfig     = {'OTHER_LDFLAGS' => '-ObjC'}
   spec.dependency 'MWPhotoBrowser', '~> 2.1.1'
   spec.dependency 'MJRefresh', '~> 3.1.0'
