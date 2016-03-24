@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/easemob/easeui-ios-cocoapods'
   spec.author       = {'EaseMob Inc.' => 'admin@easemob.com'}
   spec.source       =  {:git => 'https://github.com/easemob/easeui-ios-cocoapods.git', :tag => spec.version.to_s }
-  spec.source_files = 'EaseUI/**/*.{h,m}'
+  spec.source_files = 'EaseUI/**/*.{h,m,a}'
   spec.platform     = :ios, '6.0'
   spec.requires_arc = true
   spec.resource     = 'EaseUI/resources/EaseUIResource.bundle'
