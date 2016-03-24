@@ -40,6 +40,8 @@
 #import "EaseMessageHelper+Revoke.h"
 #import "EaseMessageHelper+RemoveAfterRead.h"
 
+#define ENABLE_CALL 0
+
 @interface EaseUI : NSObject
 
 @end

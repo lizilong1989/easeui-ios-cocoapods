@@ -16,13 +16,9 @@
 #define KNOTIFICATION_CALL @"callOutWithChatter"
 #define KNOTIFICATION_CALL_CLOSE @"callControllerClose"
 
-#define kEaseUISDKConfigIsUseLite @"isUselibEaseMobClientSDKLite"
-
 @interface EaseSDKHelper : NSObject
 
 @property (nonatomic) BOOL isShowingimagePicker;
-
-@property (nonatomic) BOOL isLite;
 
 + (instancetype)shareHelper;
 
