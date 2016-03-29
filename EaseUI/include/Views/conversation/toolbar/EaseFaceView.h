@@ -19,7 +19,7 @@
 @required
 - (void)selectedFacialView:(NSString *)str isDelete:(BOOL)isDelete;
 - (void)sendFace;
-- (void)sendFaceWithEmotion:(EaseEmotion *)emotion;
+- (void)sendFaceWithEmotion:(NSString *)emotion;
 
 @end
 

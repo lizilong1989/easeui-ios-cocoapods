@@ -21,32 +21,25 @@
 #import "EMCDDeviceManager+ProximitySensor.h"
 #import "UIViewController+HUD.h"
 #import "EaseSDKHelper.h"
+#import "EaseMessageReadManager.h"
+#import "EaseMessageHelperProtocal.h"
+#import "EaseMessageHelper.h"
 
 @class EaseMessageViewController;
+@class EaseMessageHelper;
 
 @protocol EaseMessageViewControllerDelegate <NSObject>
 
 @optional
 
-/*!
- @method
- @brief 获取消息自定义cell
- @discussion 用户根据messageModel判断是否显示自定义cell,返回nil显示默认cell,否则显示用户自定义cell
- @param tableView 当前消息视图的tableView
- @param messageModel 消息模型
- @result 返回用户自定义cell
+/**
+ *  获取消息自定义cell
  */
 - (UITableViewCell *)messageViewController:(UITableView *)tableView
                        cellForMessageModel:(id<IMessageModel>)messageModel;
 
-/*!
- @method
- @brief 获取消息cell高度
- @discussion 用户根据messageModel判断,是否自定义显示cell的高度
- @param viewController 当前消息视图
- @param messageModel 消息模型
- @param cellWidth 视图宽度
- @result 返回用户自定义cell
+/**
+ *  消息cell高度
  */
 - (CGFloat)messageViewController:(EaseMessageViewController *)viewController
            heightForMessageModel:(id<IMessageModel>)messageModel
@@ -77,13 +70,8 @@
 - (BOOL)messageViewController:(EaseMessageViewController *)viewController
         didSelectMessageModel:(id<IMessageModel>)messageModel;
 
-/*!
- @method
- @brief 点击消息头像
- @discussion 获取用户点击头像回调
- @param viewController 当前消息视图
- @param messageModel 消息模型
- @result
+/**
+ *  选中消息头像
  */
 - (void)messageViewController:(EaseMessageViewController *)viewController
     didSelectAvatarMessageModel:(id<IMessageModel>)messageModel;
@@ -95,18 +83,13 @@
             didSelectMoreView:(EaseChatBarMoreView *)moreView
                       AtIndex:(NSInteger)index;
 
-/*!
- @method
- @brief 底部录音功能按钮状态回调
- @discussion 获取底部录音功能按钮状态回调,根据EaseRecordViewType,用户自定义处理UI的逻辑
- @param viewController 当前消息视图
- @param recordView 录音视图
- @param type 录音按钮当前状态
- @result
+/**
+ * 底部录音功能按钮
  */
 - (void)messageViewController:(EaseMessageViewController *)viewController
               didSelectRecordView:(UIView *)recordView
                 withEvenType:(EaseRecordViewType)type;
+
 @end
 
 
@@ -141,35 +124,20 @@
           loadMessageFromTimestamp:(long long)timestamp
                              count:(NSInteger)count;
 
-/*!
- @method
- @brief 将EMMessage类型转换为符合<IMessageModel>协议的类型
- @discussion 将EMMessage类型转换为符合<IMessageModel>协议的类型,设置用户信息,消息显示用户昵称和头像
- @param viewController 当前消息视图
- @param EMMessage 聊天消息对象类型
- @result 返回<IMessageModel>协议的类型
+/**
+ *  将EMMessage类型转换为符合<IMessageModel>协议的类型
  */
 - (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
                            modelForMessage:(EMMessage *)message;
 
-/*!
- @method
- @brief 是否允许长按
- @discussion 获取是否允许长按的回调,默认是NO
- @param viewController 当前消息视图
- @param indexPath 长按消息对应的indexPath
- @result
+/**
+ *  是否允许长按
  */
 - (BOOL)messageViewController:(EaseMessageViewController *)viewController
    canLongPressRowAtIndexPath:(NSIndexPath *)indexPath;
 
-/*!
- @method
- @brief 触发长按手势
- @discussion 获取触发长按手势的回调,默认是NO
- @param viewController 当前消息视图
- @param indexPath 长按消息对应的indexPath
- @result
+/**
+ *  触发长按手势
  */
 - (BOOL)messageViewController:(EaseMessageViewController *)viewController
    didLongPressRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -189,32 +157,9 @@
 shouldSendHasReadAckForMessage:(EMMessage *)message
                          read:(BOOL)read;
 
-/**
- * 判断消息是否为表情消息
- */
-- (BOOL)isEmotionMessageFormessageViewController:(EaseMessageViewController *)viewController
-                                    messageModel:(id<IMessageModel>)messageModel;
-
-/**
- * 判断消息是否为表情消息
- */
-- (EaseEmotion*)emotionURLFormessageViewController:(EaseMessageViewController *)viewController
-                                   messageModel:(id<IMessageModel>)messageModel;
-
-/**
- * 获取表情
- */
-- (NSArray*)emotionFormessageViewController:(EaseMessageViewController *)viewController;
-
-/**
- * 获取发送表情消息的扩展字段
- */
-- (NSDictionary*)emotionExtFormessageViewController:(EaseMessageViewController *)viewController
-                                        easeEmotion:(EaseEmotion*)easeEmotion;
-
 @end
 
-@interface EaseMessageViewController : EaseRefreshTableViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, IChatManagerDelegate, IEMChatProgressDelegate, EMCallManagerCallDelegate, EMCDDeviceManagerDelegate, EMChatToolbarDelegate, EaseChatBarMoreViewDelegate, EMLocationViewDelegate>
+@interface EaseMessageViewController : EaseRefreshTableViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, IChatManagerDelegate, IEMChatProgressDelegate, EMCallManagerCallDelegate, EMCDDeviceManagerDelegate, EMChatToolbarDelegate, EaseChatBarMoreViewDelegate, EMLocationViewDelegate, EMReadManagerProtocol, EaseMessageHelperProtocal, EaseMessageCellDelegate>
 
 @property (weak, nonatomic) id<EaseMessageViewControllerDelegate> delegate;
 
@@ -242,7 +187,7 @@ shouldSendHasReadAckForMessage:(EMMessage *)message
 //显示的EMMessage类型的消息列表
 @property (strong, nonatomic) NSMutableArray *messsagesSource;
 
-@property (strong, nonatomic) UIView *chatToolbar;
+@property (strong, nonatomic) EaseChatToolbar *chatToolbar;
 
 @property(strong, nonatomic) EaseChatBarMoreView *chatBarMoreView;
 
@@ -268,6 +213,11 @@ shouldSendHasReadAckForMessage:(EMMessage *)message
  *  发送文本消息
  */
 - (void)sendTextMessage:(NSString *)text;
+
+/**
+ *  发送带扩展属性的文本消息
+ */
+- (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext;
 
 /**
  *  发送图片消息
@@ -297,5 +247,25 @@ shouldSendHasReadAckForMessage:(EMMessage *)message
  */
 -(void)addMessageToDataSource:(EMMessage *)message
                      progress:(id<IEMChatProgressDelegate>)progress;
+
+/**
+ *  EaseMessageHelperType更改
+ */
+- (void)changeEaseMessageHelpType:(EMHelperType)helpType;
+
+/**
+ *  重置EaseMessageHelperType为emHelperTypeDefault
+ */
+- (void)resetEaseMessageHelpType;
+
+/**
+ *  显示长按菜单
+ */
+- (void)showMenuViewController:(UIView *)showInView
+                   andIndexPath:(NSIndexPath *)indexPath
+                    messageType:(MessageBodyType)messageType;
+
+- (BOOL)shouldSendHasReadAckForMessage:(EMMessage *)message
+                                  read:(BOOL)read;
 
 @end

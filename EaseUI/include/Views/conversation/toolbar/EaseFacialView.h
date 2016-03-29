@@ -12,14 +12,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class EaseEmotion;
 @protocol EaseFacialViewDelegate
 
 @optional
 -(void)selectedFacialView:(NSString*)str;
 -(void)deleteSelected:(NSString *)str;
 -(void)sendFace;
--(void)sendFace:(EaseEmotion *)emotion;
+-(void)sendFace:(NSString *)str;
 
 @end
 
@@ -33,9 +32,7 @@
 
 @property(strong, nonatomic, readonly) NSArray *faces;
 
--(void)loadFacialView:(NSArray*)emotionManagers size:(CGSize)size;
-
--(void)loadFacialViewWithPage:(NSInteger)page;
+-(void)loadFacialView:(EaseEmotionManager*)emotionManager size:(CGSize)size;
 
 //-(void)loadFacialView:(int)page size:(CGSize)size;
 

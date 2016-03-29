@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'EaseUI'
-  spec.version      = '1.0.0'
+  spec.version      = '1.0.1'
   spec.license      = 'MIT'
   spec.summary      = 'EaseMob UI Kit'
   spec.homepage     = 'https://github.com/easemob/easeui-ios-cocoapods'
@@ -10,8 +10,8 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, '6.0'
   spec.requires_arc = true
   spec.resource     = 'EaseUI/resources/EaseUIResource.bundle'
-  spec.vendored_libraries = ['EaseUI/lib/libEaseUI.a']
+  spec.vendored_libraries = ['EaseUI/lib/libEaseUI.a','EaseUI/include/3rdparty/DeviceHelper/libopencore-amrnb.a','EaseUI/include/3rdparty/DeviceHelper/libopencore-amrwb.a']
   spec.xcconfig     = {'OTHER_LDFLAGS' => '-ObjC'}
   spec.dependency 'MWPhotoBrowser', '~> 2.1.1'
-  spec.dependency 'MJRefresh', '~> 3.0.6'
+  spec.dependency 'MJRefresh', '~> 3.1.0'
 end
